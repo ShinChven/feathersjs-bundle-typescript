@@ -1,45 +1,84 @@
 # feathersjs-bundle-typescript
 
-> 
+> A demo project to demonstrate how to bundle a TypeScript FeathersJS project to one single JavaScript file using webpack.
 
-## About
+## Try this demo
 
-This project uses [Feathers](http://feathersjs.com). An open source web framework for building modern real-time applications.
+- Clone the project
+- Install node dependencies
+- Bundle the project to one single JavaScript file: `npm run bundle`
+- Run JavaScript distribution file: `npm run serve`
 
-## Getting Started
+## How to config
 
-Getting up and running is as easy as 1, 2, 3.
+### Add webpack dependencies
 
-1. Make sure you have [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
-2. Install your dependencies
-
-    ```
-    cd path/to/feathersjs-bundle-typescript
-    npm install
-    ```
-
-3. Start your app
-
-    ```
-    npm start
-    ```
-
-## Testing
-
-Simply run `npm test` and all your tests in the `test/` directory will be run.
-
-## Scaffolding
-
-Feathers has a powerful command line interface. Here are a few things it can do:
-
-```
-$ npm install -g @feathersjs/cli          # Install Feathers CLI
-
-$ feathers generate service               # Generate a new Service
-$ feathers generate hook                  # Generate a new Hook
-$ feathers help                           # Show all commands
+```bash
+npm i -D webpack webpack-cli webpack-node-externals ts-loader
 ```
 
-## Help
+### Modify tsconfig.json
 
-For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "module": "commonjs",
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "strict": true,
++    "esModuleInterop": true,
++    "noImplicitAny": true,
++    "strictNullChecks": true,
+  },
++  "include": [
++    "src/**/*.ts"
++  ],
+  "exclude": [
++    "node_modules",
+    "test"
+  ],
+}
+```
+
+### Add webpack.config.js
+
+```typescript
+const nodeExternals = require('webpack-node-externals');
+
+module.exports = {
+  entry: './src/index.ts',
+  output: {
+    filename: 'index.js', // <-- Important
+    libraryTarget: 'this' // <-- Important
+  },
+  mode: 'production',
+  target: 'node', // <-- Important
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true
+        }
+      }
+    ]
+  },
+  resolve: {
+    extensions: [ '.ts', '.tsx', '.js' ]
+  },
+  externals: [nodeExternals()] // <-- Important
+};
+```
+
+### Bundle and run
+
+```bash
+webpack
+node dist/index.js
+```
+
+## References
+
+- [[Stackoverflow] How do I compile my TypeScript code for Node.js to one file?](https://stackoverflow.com/questions/40019087/how-do-i-compile-my-typescript-code-for-node-js-to-one-file)
