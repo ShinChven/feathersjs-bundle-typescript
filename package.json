@@ -1,6 +1,6 @@
 {
   "name": "feathersjs-bundle-typescript",
-  "description": "",
+  "description": "A demo project to demonstrate how to bundle a TypeScript FeathersJS project to one single JavaScript file using webpack.",
   "version": "0.0.0",
   "homepage": "",
   "private": true,
@@ -11,6 +11,9 @@
   "author": {
     "name": "ShinChven",
     "email": "shinchven@gmail.com"
+  },
+  "repository": {
+    "url": "https://github.com/ShinChven/feathersjs-bundle-typescript.git"
   },
   "contributors": [],
   "bugs": {},
