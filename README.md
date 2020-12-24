@@ -81,4 +81,4 @@ node dist/index.js
 
 ## References
 
-- [[Stackoverflow] How do I compile my TypeScript code for Node.js to one file?](https://stackoverflow.com/questions/40019087/how-do-i-compile-my-typescript-code-for-node-js-to-one-file)
+- [[Stackoverflow] How do I compile my TypeScript code for Node.js to one file?](https://stackoverflow.com/a/56220367/2108080)
